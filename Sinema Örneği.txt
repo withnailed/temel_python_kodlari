@@ -1,0 +1,80 @@
+class Sinema:
+    TAM = 70.0
+    INDIRIMLI = 50.0
+    
+    def __init__(self, salonn_adi, koltuksayi):
+        self.toplamKoltukSayisi = koltuksayi
+        self.salonAd = salonn_adi
+        self.bosKoltukSayisi = self.toplamKoltukSayisi
+        self.bakiye = 0
+        self.iptalEdilenBiletSayisi=0
+    
+    def BiletSat(self, indirimli):
+        self.bosKoltukSayisi -= 1
+        if indirimli:
+            self.bakiye += self.INDIRIMLI
+        else:
+            self.bakiye += self.TAM
+        print('Satış yapıldı...')
+    
+    def BiletIptal(self, indirimli):
+        self.bosKoltukSayisi += 1
+        self.iptalEdilenBiletSayisi+=1
+        if indirimli:
+            self.bakiye -= self.INDIRIMLI
+        else:
+            self.bakiye -= self.TAM
+        self.iptalEdilenBiletSayisi+=1
+        print ('Bir bilet iptal edildi...')
+    
+    def BosKoltukOgren(self):
+        return self.bosKoltukSayisi
+    
+    def BakiyeOgren(self):
+        return self.bakiye
+    def IptalEdilenBiletSayisi(self):
+        return self.iptalEdilenBiletSayisi
+    
+    
+salon_ad=input("Salon adı giriniz:")
+salon_kapasite=int(input("Salon kapasitesi giriniz:"))
+sinema=Sinema(salon_ad,salon_kapasite)
+print(sinema.salonAd, "Hoş Geldiniz")
+menu_options = {
+    1: 'Bilet Satış',
+    2: 'Bilet Iptal',
+    3: 'Boş Koltuk Sayısı',
+    4: 'Bakiye Öğren',
+    5: 'İptal Edilen Bilet Sayısı',
+    6: 'Çıkış'
+}
+def print_menu():
+    print('-----------------------')
+    for key in menu_options.keys():
+        print (key, '--', menu_options[key] )
+    secim=int(input("Yapmak istediğiniz işlemi seçiniz:"))
+    return secim
+
+while (True):
+    secim=print_menu()
+    if secim==1:
+        indirim=int(input("İndirimli bilet satışı için 1'e, normal bilet için 2'ye basiniz."))
+        if indirim==1:
+            sinema.BiletSat(True)
+        if indirim==2:
+            sinema.BiletSat(False)
+    if secim==2:
+        indirim=int(input("İndirimli bilet iptali için 1'e, normal bilet için 2'ye basiniz."))
+        if indirim==1:
+            sinema.BiletIptal(True)
+        if indirim==2:
+            sinema.BiletIptal(False)
+    if secim==3:
+        print('Boş koltuk sayısı:', sinema.BosKoltukOgren())
+    if secim==4:
+        print('Sinemanın bakiyesi:',sinema.BakiyeOgren())
+    if secim==5:
+        print('İptal edilen bilet sayısı:',sinema.IptalEdilenBiletSayisi())
+    if secim==6:
+        print('Çıkış yaptınız....')
+        break
