@@ -1,0 +1,1 @@
+# temel_python_kodlari
